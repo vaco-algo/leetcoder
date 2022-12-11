@@ -1,0 +1,18 @@
+{
+  "name": "leetcode-algo-uploader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "leetcode-algo-uploader": "bin/add.js"
+  },
+  "scripts": {
+    "add": "node bin/add.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "8.2.5"
+  }
+}
