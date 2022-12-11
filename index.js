@@ -5,6 +5,7 @@ async function upload() {
 
   await problemService.checkProblemUrl();
   await problemService.getProblemCode();
+  await problemService.generateProblemFile();
 }
 
 module.exports = upload;
