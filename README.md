@@ -1,3 +1,17 @@
-# leetcode-uploader
+# LEETCODER
 
-leetcode link를 입력해, 자동으로 github으로 push 해주는 uploader
+leetcoder는 leetcode 문제 url을 입력해 vaco-algo-study repository로 push해주는 uploader입니다.
+
+puppeteer를 이용해 문제 페이지를 크롤링하여 코드를 가져오고(javascript), .js 파일을 생성해 줍니다.
+
+github으로 push까지 자동으로 진행되도록 command를 생성합니다.
+
+## 사용 방법
+
+```
+$ npm run add
+
+$ (url을 입력해주세요: ) leetcode url 입력
+
+$ (Github으로 push 하시겠습니까?) push 여부 선택
+```
