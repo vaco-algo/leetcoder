@@ -1,8 +1,13 @@
+const fs = require("fs/promises");
+const path = require("path");
 const ora = require("ora");
 const inquirer = require("inquirer");
 
+const Command = require("./services/command");
 const Leetcode = require("./services/leetcode");
+const GITHUB = require("./config/github");
 const date = require("./utils/date");
+const install = require("./utils/intall");
 
 async function upload() {
   const problem = new Leetcode();
@@ -52,6 +57,47 @@ async function upload() {
   console.log();
   console.log(problem.fileCode);
   console.log();
+
+  try {
+    await new Command()
+      .setPath(process.cwd())
+      .run(`git clone -b problems --single-branch ${GITHUB.ALGO_REPOSITORY_URL}`);
+
+    await install(
+      path.join(process.cwd(), "vaco-algo-study", "problems"),
+      problem.fileName,
+      problem.fileCode
+    );
+
+    console.log("문제 파일 생성을 완료하였습니다.");
+
+    const { isPush } = await inquirer.prompt({
+      type: "list",
+      name: "isPush",
+      message: "Github으로 push 하시겠습니까?",
+      choices: ["Yes", "No"]
+    });
+
+    if (isPush !== "Yes" || !isPush) {
+      throw new Error("exit");
+    }
+
+    await new Command()
+      .setPath(path.join(process.cwd(), "vaco-algo-study"))
+      .run(`git add .`)
+      .run(`git commit -m "(auto upload) ${problem.title}"`)
+      .run("git push origin problems");
+
+    console.log("문제 업로드가 완료되었습니다.");
+  } catch (error) {
+    console.error(error);
+  } finally {
+    await fs.rm(
+      path.join(process.cwd(), "vaco-algo-study"),
+      { recursive: true }
+    );
+    return process.exit(1);
+  }
 }
 
 module.exports = upload;
