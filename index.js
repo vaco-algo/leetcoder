@@ -7,7 +7,7 @@ const Command = require("./services/command");
 const Leetcode = require("./services/leetcode");
 const GITHUB = require("./config/github");
 const date = require("./utils/date");
-const install = require("./utils/intall");
+const install = require("./utils/install");
 
 async function upload() {
   const problem = new Leetcode();
