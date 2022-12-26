@@ -40,6 +40,13 @@ async function upload() {
       hour: undefined,
       minute: undefined
     },
+    validate: (date) => {
+      if (date.toString() === "Invalid Date") {
+        return "날짜를 다시 선택해주세요.";
+      }
+
+      return true;
+    }
   });
 
   const spinner = ora("leetcode에서 code 정보를 가져오는 중입니다!").start();
