@@ -19,6 +19,7 @@ async function upload() {
     type: "input",
     name: "url",
     message: "url을 입력해주세요: ",
+    prefix: " 🖐️ ",
     validate: (url) => {
       if (!url.includes("https://leetcode.com/problems/")) {
         return "leetcode url이 아닙니다! url을 다시 입력해주세요";
