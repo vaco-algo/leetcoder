@@ -2,15 +2,19 @@ const fs = require("fs/promises");
 const path = require("path");
 const ora = require("ora");
 const inquirer = require("inquirer");
+const DatePrompt = require("inquirer-date-prompt");
 
 const Command = require("./services/command");
 const Leetcode = require("./services/leetcode");
 const GITHUB = require("./config/github");
-const date = require("./utils/date");
+const dateFormatter = require("./utils/dateFormatter");
 const install = require("./utils/install");
 
 async function upload() {
   const problem = new Leetcode();
+
+  inquirer.registerPrompt("date", DatePrompt);
+
   const { url } = await inquirer.prompt({
     type: "input",
     name: "url",
@@ -23,6 +27,20 @@ async function upload() {
       return true;
     }
   });
+  const { problemDate } = await inquirer.prompt({
+    type: "date",
+    name: "problemDate",
+    message: "문제를 푸는 날짜는 언제인가요?",
+    prefix: " 🗓️ ",
+    default: new Date(),
+    locale: "en-KR",
+    format: {
+      month: "short",
+      hour: undefined,
+      minute: undefined
+    },
+  });
+
   const spinner = ora("leetcode에서 code 정보를 가져오는 중입니다!").start();
 
   try {
@@ -34,7 +52,7 @@ async function upload() {
       .get("editor")
       .close();
 
-    problem.fileName = `[${date()}] ${problem.title}.js`;
+    problem.fileName = `[${dateFormatter(problemDate)}] ${problem.title}.js`;
 
     const fileCodeArray = problem.editor
       .split("\n")
