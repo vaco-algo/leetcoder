@@ -62,11 +62,11 @@ class Leetcode {
 
   clickLanguage(language) {
     this.chain(async () => {
-      const aa = this.selectors.listBoxButton;
-      const languageListSelector = this.selectors["languageList"];
+      const listBoxButtonSelector = this.selectors.listBoxButton;
+      const languageListSelector = this.selectors.languageList;
 
-      await this.page.waitForSelector(aa);
-      await this.page.click(aa);
+      await this.page.waitForSelector(listBoxButtonSelector);
+      await this.page.click(listBoxButtonSelector);
       await this.page.waitForSelector(languageListSelector);
 
       const languageButtonSelector = await this.page.evaluate((selector, language) => {
