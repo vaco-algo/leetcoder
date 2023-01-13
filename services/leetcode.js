@@ -99,4 +99,4 @@ class Leetcode {
   }
 }
 
-module.exports = Leetcode;
+export default Leetcode;

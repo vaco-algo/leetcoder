@@ -12,4 +12,4 @@ async function install(filePath, fileName, fileContent) {
   }
 }
 
-module.exports = install;
+export default install;

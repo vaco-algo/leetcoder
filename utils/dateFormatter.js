@@ -7,4 +7,4 @@ function dateFormatter(date) {
     .replaceAll("-", "");
 }
 
-module.exports = dateFormatter;
+export default dateFormatter;

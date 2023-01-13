@@ -31,4 +31,4 @@ function seperate(txt) {
   return result;
 }
 
-module.exports = seperate;
+export default seperate;
