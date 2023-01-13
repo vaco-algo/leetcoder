@@ -7,17 +7,17 @@
     "leetcode-algo-uploader": "bin/add.js"
   },
   "scripts": {
-    "add": "node bin/add.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^9.4.1",
-    "execa": "^5.1.1",
-    "inquirer": "8.2.5",
-    "inquirer-date-prompt": "^2.0.1",
-    "ora": "5.4.1",
-    "puppeteer": "^19.4.0"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
