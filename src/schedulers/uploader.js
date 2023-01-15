@@ -17,6 +17,8 @@ const uploader = new Schedule(
       const problemIndex = await github.getLatestProblemIndex();
       const url = PROBLEMS[problemIndex + 1];
 
+      state.setUrl(url);
+
       await leetcode.open(url)
         .get("title")
         .clickLanguage("JavaScript")
@@ -33,7 +35,6 @@ const uploader = new Schedule(
       if (!uploadResult) throw new Error();
 
       state.setProblem(leetcode.title);
-      state.setUrl(url);
     } catch (error) {
       console.error(error);
       state.setProblem("fail");
