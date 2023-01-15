@@ -1,6 +1,6 @@
-const puppeteer = require("puppeteer");
+import puppeteer from "puppeteer-core";
 
-class Leetcode {
+class LeetcodeService {
   constructor() {
     this.browser = null;
     this.page = null;
@@ -15,7 +15,9 @@ class Leetcode {
 
   open(url) {
     this.chain(async () => {
-      this.browser = await puppeteer.launch();
+      this.browser = await puppeteer.launch({
+        executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      });
       this.page = await this.browser.newPage();
       await this.page.setViewport({
         width: 1920,
@@ -68,15 +70,7 @@ class Leetcode {
       await this.page.waitForSelector(listBoxButtonSelector);
       await this.page.click(listBoxButtonSelector);
       await this.page.waitForSelector(languageListSelector);
-
-      const languageButtonSelector = await this.page.evaluate((selector, language) => {
-        return "#" + Array.from(document.querySelector(selector).children)
-          .find(el => el.textContent === language)
-          .getAttribute("id");
-      }, languageListSelector, language);
-
-      await this.page.waitForSelector(languageButtonSelector);
-      await this.page.click(languageButtonSelector);
+      await this.page.click(`text/${language}`);
     });
 
     return this;
@@ -99,4 +93,4 @@ class Leetcode {
   }
 }
 
-module.exports = Leetcode;
+export default LeetcodeService;
