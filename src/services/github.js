@@ -26,13 +26,11 @@ class GithubService {
         })
         .length;
     } catch (error) {
-      console.error(JSON.stringify(error));
       throw new Error(error);
     }
   }
 
   async uploadFile({ fileName, content, message }) {
-    console.log({ fileName, content, message });
     const url = `https://api.github.com/repos/${GITHUB.REPO}/contents/problems/${fileName}`;
 
     try {

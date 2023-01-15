@@ -6,11 +6,15 @@ import state from "../utils/state.js";
 const awaker = new Schedule(
   "*/10 * * * *",
   async () => {
-    const { data } = await axios.get(CONFIG.BASE_URL);
+    try {
+      const { data } = await axios.get(CONFIG.BASE_URL);
 
-    if (!!data) {
-      state.wakeUp();
-    };
+      if (!!data) {
+        state.wakeUp();
+      };
+    } catch {
+      state.setProblem("sleep");
+    }
   },
   null,
   false,
