@@ -1,5 +1,10 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 const GITHUB = {
-  ALGO_REPOSITORY_URL: "https://github.com/vaco-algo/vaco-algo-study.git",
+  REPO: process.env.GITHUB_REPO,
+  TOKEN: process.env.GITHUB_TOKEN,
+  BRANCH: "problems",
 };
 
 export default GITHUB;
