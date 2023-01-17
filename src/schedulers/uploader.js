@@ -6,35 +6,26 @@ import GithubService from "../services/github.js";
 import toFileName from "../utils/toFileName.js";
 import toFileContent from "../utils/toFileContent.js";
 import state from "../utils/state.js";
+import leetcode from "../services/leetcode.js";
 
 const uploader = new Schedule(
   "58 10 * * Tue/Thu",
   async () => {
-    const github = new GithubService();
-    const leetcode = new LeetcodeService();
-
     try {
+      const github = new GithubService();
       const problemIndex = await github.getLatestProblemIndex();
       const url = PROBLEMS[problemIndex + 1];
 
-      state.setUrl(url);
-
-      await leetcode.open(url)
-        .get("title")
-        .clickLanguage("JavaScript")
-        .sleep(1000)
-        .get("editor")
-        .close();
-
+      const { title, editor } = await leetcode(url);
       const uploadResult = await github.uploadFile({
-        fileName: toFileName(leetcode.title),
-        content: toFileContent(leetcode.editor),
-        message: `(auto upload) ${leetcode.title}`,
+        fileName: toFileName(title),
+        content: toFileContent(editor),
+        message: `(auto upload) ${title}`,
       });
 
       if (!uploadResult) throw new Error();
 
-      state.setProblem(leetcode.title);
+      state.setProblem(title);
     } catch (error) {
       console.error(error);
       state.setProblem("fail");

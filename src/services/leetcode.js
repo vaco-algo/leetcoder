@@ -1,96 +1,38 @@
-import puppeteer from "puppeteer-core";
+import axios from "axios";
+import { JSDOM } from "jsdom";
 
-class LeetcodeService {
-  constructor() {
-    this.browser = null;
-    this.page = null;
-    this.selectors = {
-      listBoxButton: ".flex.cursor-pointer.items-center.rounded.text-left",
-      languageList: "ul.absolute.mt-1.max-h-56.overflow-auto.rounded-lg.p-2.z-dropdown",
-      editor: ".view-lines.monaco-mouse-cursor-text",
-      title: "span.mr-2.text-lg.font-medium.text-label-1"
-    };
-    this.queue = Promise.resolve();
-  }
+const leetcode = async (url) => {
+  const { data } = await axios.get(url);
+  const { document } = new JSDOM(data).window;
+  const json = document.getElementById("__NEXT_DATA__").innerHTML;
+  const config = JSON.parse(json);
 
-  open(url) {
-    this.chain(async () => {
-      this.browser = await puppeteer.launch({
-        executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-      });
-      this.page = await this.browser.newPage();
-      await this.page.setViewport({
-        width: 1920,
-        height: 1080,
-        deviceScaleFactor: 1,
-      });
-      await this.page.goto(url);
-    });
+  const queries = config
+    ?.props
+    ?.pageProps
+    ?.dehydratedState
+    ?.queries;
 
-    return this;
-  }
+  const { questionId, title } = queries
+    ?.find((query) => query.queryKey.includes("questionTitle"))
+    ?.state
+    ?.data
+    ?.question;
+  const problemTitle = `${questionId}. ${title}`;
 
-  close() {
-    this.chain(async () => {
-      await this.browser.close();
-    });
+  const editor = queries
+    ?.find((query) => query.queryKey.includes("questionEditorData"))
+    ?.state
+    ?.data
+    ?.question
+    ?.codeSnippets
+    ?.find((snippet) => snippet.lang === "JavaScript")
+    ?.code;
 
-    return this;
-  }
+  return {
+    title: problemTitle,
+    editor,
+  };
+};
 
-  get(name) {
-    this.chain(async () => {
-      const selector = this.selectors[name];
-      await this.page.waitForSelector(selector);
-      const handle = await this.page.$(selector);
-      const result = await this.page.evaluate(handle => handle.innerText, handle);
-
-      this[name] = result;
-    });
-
-    return this;
-  }
-
-  click(name) {
-    this.chain(async () => {
-      const selector = this.selectors[name];
-
-      await this.page.waitForSelector(selector);
-      await this.page.click(selector);
-    });
-
-    return this;
-  }
-
-  clickLanguage(language) {
-    this.chain(async () => {
-      const listBoxButtonSelector = this.selectors.listBoxButton;
-      const languageListSelector = this.selectors.languageList;
-
-      await this.page.waitForSelector(listBoxButtonSelector);
-      await this.page.click(listBoxButtonSelector);
-      await this.page.waitForSelector(languageListSelector);
-      await this.page.click(`text/${language}`);
-    });
-
-    return this;
-  }
-
-  sleep(ms) {
-    this.chain(async () => {
-      await new Promise(res => setTimeout(res, ms));
-    });
-
-    return this;
-  }
-
-  then(callback) {
-    callback(this.queue);
-  }
-
-  chain(callback) {
-    return this.queue = this.queue.then(callback);
-  }
-}
-
-export default LeetcodeService;
+export default leetcode;
