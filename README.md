@@ -1,26 +1,16 @@
-# LEETCODER
+## LEETCODER
 
-leetcoder는 leetcode url을 입력해 `vaco-algo-study` repository로 push해주는 uploader입니다.
+leetcode에서 코드를 가져와 github 레포지토리로 업로드하는 파일 업로드 서버입니다.
 
-puppeteer를 이용해 문제 페이지를 크롤링하여 코드를 가져오고, 문제 파일을 생성해 줍니다.
+알고리즘 스터디를 진행하는 매 주 화, 목요일 11시에 업로드됩니다.
 
-`vaco-algo-study/problems` branch로 push까지 진행할 수 있습니다.
+`axios`, `Github API`, `cron`을 사용하였습니다!
 
-## 사용 방법
+### 버전 기록
 
-```
-$ npm install
+2.1.0: puppeteer 배포 환경 문제로, axios를 이용한 크롤링으로 변경.
 
-$ npm run add
-
-$ (url을 입력해주세요: ) leetcode url 입력
-
-$ (문제를 푸는 날짜는 언제인가요?: ) 날짜 선택
-
-$ (Github으로 push 하시겠습니까?) push 여부 선택
-```
-
-## 버전 기록
+2.0.0: 파일 업로드 서버로 변경. cron 추가.
 
 1.1.0: 날짜 선택 프로세스 추가
 
