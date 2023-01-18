@@ -1,12 +1,9 @@
 {
   "name": "leetcode-algo-uploader",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "",
   "main": "index.js",
   "type": "module",
-  "bin": {
-    "leetcode-algo-uploader": "bin/add.js"
-  },
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
@@ -19,11 +16,9 @@
     "cron": "^2.2.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "express-async-errors": "^3.1.1",
     "http-errors": "^2.0.0",
     "js-base64": "^3.7.4",
-    "jsdom": "^21.0.0",
-    "puppeteer-core": "^19.5.2"
+    "jsdom": "^21.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

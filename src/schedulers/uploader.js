@@ -1,7 +1,6 @@
 import { CronJob as Schedule } from "cron";
 
 import PROBLEMS from "../config/problems.js";
-import LeetcodeService from "../services/leetcode.js";
 import GithubService from "../services/github.js";
 import toFileName from "../utils/toFileName.js";
 import toFileContent from "../utils/toFileContent.js";

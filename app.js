@@ -11,11 +11,9 @@ const app = express();
 const server = http.createServer(app);
 const port = CONFIG.PORT;
 
-// middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// routes
 app.get("/", (req, res) => {
   res.status(200).json({
     problem: state.getProblem(),
@@ -24,7 +22,6 @@ app.get("/", (req, res) => {
   });
 });
 
-// error handling
 app.use((req, res, next) => {
   next(createError(404, ERROR.PAGE_NOT_FOUND));
 });
@@ -36,7 +33,6 @@ app.use((err, req, res, next) => {
 
 schedulerLoader();
 
-// start server
 app.set("port", port);
 server.listen(port, () => {
   console.log(`server listen on ${port}`);
