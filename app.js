@@ -1,6 +1,5 @@
 import http from "http";
 import express from "express";
-import "express-async-errors";
 
 import schedulerLoader from "./src/schedulers/index.js";
 import state from "./src/utils/state.js";
