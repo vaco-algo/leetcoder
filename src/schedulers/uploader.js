@@ -8,7 +8,7 @@ import state from "../utils/state.js";
 import leetcode from "../services/leetcode.js";
 
 const uploader = new Schedule(
-  "10 11 * * 2,4",
+  "58 10 * * 2,4",
   async () => {
     try {
       const github = new GithubService();
