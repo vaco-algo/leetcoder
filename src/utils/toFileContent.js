@@ -1,7 +1,7 @@
 function toFileContent(text, url) {
   const fileCodeArray = text
     .split("\n")
-    .map(code => code.includes("var") ? code.replaceAll("var", "const") : code);
+    .map(code => code.includes("var") ? code.replace(/var/g, "const") : code);
   const remarkStartIndex = fileCodeArray
     .findIndex((textCode) => textCode === "/**");
 
