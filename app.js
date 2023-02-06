@@ -20,7 +20,6 @@ app.get("/", async (req, res) => {
   const url = req.query.url;
 
   if (url) {
-    console.log(url);
     try {
       const result = await axios.get(url);
 
