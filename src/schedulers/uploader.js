@@ -20,7 +20,7 @@ const uploader = new Schedule(
       const { title, editor } = await leetcode(url);
       const uploadResult = await github.uploadFile({
         fileName: toFileName(title),
-        content: toFileContent(editor),
+        content: toFileContent(editor, url),
         message: `(auto upload) ${title}`,
       });
 
