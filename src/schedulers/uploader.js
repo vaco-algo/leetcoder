@@ -8,17 +8,19 @@ import state from "../utils/state.js";
 import leetcode from "../services/leetcode.js";
 
 const uploader = new Schedule(
-  "58 10 * * Tue/Thu",
+  "58 10 * * 2,4",
   async () => {
     try {
       const github = new GithubService();
       const problemIndex = await github.getLatestProblemIndex();
       const url = PROBLEMS[problemIndex + 1];
 
+      state.setUrl(url);
+
       const { title, editor } = await leetcode(url);
       const uploadResult = await github.uploadFile({
         fileName: toFileName(title),
-        content: toFileContent(editor),
+        content: toFileContent(editor, url),
         message: `(auto upload) ${title}`,
       });
 
